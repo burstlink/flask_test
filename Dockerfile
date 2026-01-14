@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # 暴露端口（Flask 默认 5000）
-EXPOSE 5000
+# EXPOSE 5000
 
 # 启动命令：使用 Gunicorn 提升生产性能（可选，但推荐）
 # 如果你不想引入 Gunicorn，也可以直接用 flask run（见下方注释）
@@ -25,7 +25,6 @@ EXPOSE 5000
 RUN pip install gunicorn
 
 # 使用 Gunicorn 启动（更稳定、支持并发）
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
-
+CMD gunicorn --bind 0.0.0.0:$PORT app:app
 # —— 或者，如果你坚持用 Flask 内置服务器（仅限开发/测试）——
 # CMD ["flask", "--app", "app", "run", "--host=0.0.0.0", "--port=5000"]
